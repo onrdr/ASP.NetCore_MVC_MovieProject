@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\images\products\06fca1eb-e211-4851-99f2-906215ee6d2c.png" />
+    <Content Remove="wwwroot\images\products\3eb3f83a-4b1a-4684-9c2f-d4c1001c4144.png" />
+    <Content Remove="wwwroot\images\products\56ab08f2-5dad-479f-9354-c2722a096797.jpg" />
+    <Content Remove="wwwroot\images\products\6d844dbc-31aa-4a2f-9ebb-828ffc47eaf8.png" />
+    <Content Remove="wwwroot\images\products\84928218-b766-4c57-aa14-6f7e9a9b21be.jpg" />
+    <Content Remove="wwwroot\images\products\a0a8b655-89ff-4176-a258-ed1a991dfb48.jpg" />
+    <Content Remove="wwwroot\images\products\eb69c71a-5058-4dab-a8ae-ee03160f80c2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
+</Project>
