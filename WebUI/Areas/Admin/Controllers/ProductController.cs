@@ -10,7 +10,7 @@ namespace WebUI.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IWebHostEnvironment _hostEnvironment; 
 
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
@@ -64,6 +64,11 @@ namespace WebUI.Areas.Admin.Controllers
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
+            productVm.CategoryList = _unitOfWork.CategoryRepository.GetAll().Select(category => new SelectListItem
+            {
+                Text = category.Name,
+                Value = category.Id.ToString(),
+            });
             return View(productVm);
         }
         #endregion
