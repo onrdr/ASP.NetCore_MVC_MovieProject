@@ -31,11 +31,7 @@ namespace WebUI.Areas.Admin.Controllers
             ProductVM productVM = new()
             {
                 Product = new(),
-                CategoryList = _unitOfWork.CategoryRepository.GetAll().Select(category => new SelectListItem
-                {
-                    Text = category.Name,
-                    Value = category.Id.ToString(),
-                })
+                CategoryList = GetSelectedItems()
             };  
 
             if (id == null || id < 1)
@@ -51,6 +47,7 @@ namespace WebUI.Areas.Admin.Controllers
             }
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductVM productVm, IFormFile? file)
@@ -64,11 +61,8 @@ namespace WebUI.Areas.Admin.Controllers
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
-            productVm.CategoryList = _unitOfWork.CategoryRepository.GetAll().Select(category => new SelectListItem
-            {
-                Text = category.Name,
-                Value = category.Id.ToString(),
-            });
+            
+            productVm.CategoryList = GetSelectedItems();
             return View(productVm);
         }
         #endregion
@@ -112,6 +106,14 @@ namespace WebUI.Areas.Admin.Controllers
         #endregion
 
         #region Functions 
+        private IEnumerable<SelectListItem> GetSelectedItems()
+        {
+            return _unitOfWork.CategoryRepository.GetAll().Select(category => new SelectListItem
+            {
+                Text = category.Name,
+                Value = category.Id.ToString(),
+            });
+        }
         private void UploadFileIfNotNull(ProductVM productVm, IFormFile? file)
         {
             if (file != null)
