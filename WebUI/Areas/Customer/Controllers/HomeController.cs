@@ -21,8 +21,8 @@ namespace WebUI.Areas.Customer.Controllers
         {
             IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category");
             return View(productList);
-        }
-        // "images\\products\\b7b79960-9fda-4da4-8b7e-3c06b4c5266a.jpg"
+        } 
+
         public IActionResult Details(int? id)
         {
             ShoppingCart cart = new()
