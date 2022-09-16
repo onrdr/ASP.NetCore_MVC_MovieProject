@@ -10,7 +10,7 @@ namespace WebUI.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _hostEnvironment; 
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
@@ -32,7 +32,7 @@ namespace WebUI.Areas.Admin.Controllers
             {
                 Product = new(),
                 CategoryList = GetSelectedItems()
-            };  
+            };
 
             if (id == null || id < 1)
             {
@@ -61,40 +61,11 @@ namespace WebUI.Areas.Admin.Controllers
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
-            
+
             productVm.CategoryList = GetSelectedItems();
             return View(productVm);
         }
-        #endregion
-
-        #region Delete GET - POST
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id < 1)
-                return NotFound();
-
-            var product = _unitOfWork.ProductRepository.GetFirstOrDefault(c => c.Id == id);
-
-            if (product == null)
-                return NotFound();
-
-            return View(product);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
-        {
-            var category = _unitOfWork.ProductRepository.GetFirstOrDefault(c => c.Id == id);
-            if (category == null)
-                return NotFound();
-
-            _unitOfWork.ProductRepository.Remove(category);
-            _unitOfWork.Save();
-            TempData["success"] = "Product deleted successfully";
-            return RedirectToAction("Index");
-        }
-        #endregion
+        #endregion 
 
         #region API CALLS : https://localhost:44304/admin/product/getall
         [HttpGet]
@@ -102,6 +73,22 @@ namespace WebUI.Areas.Admin.Controllers
         {
             var productList = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category");
             return Json(new { data = productList });
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var category = _unitOfWork.ProductRepository.GetFirstOrDefault(c => c.Id == id);
+            if (category == null)
+                return Json(new { success = false, message = "Error while deleting" });
+
+            var oldImagePath = Path.Combine(_hostEnvironment.WebRootPath, category.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+                System.IO.File.Delete(oldImagePath);
+
+            _unitOfWork.ProductRepository.Remove(category);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Deleted successfully" });
         }
         #endregion
 
