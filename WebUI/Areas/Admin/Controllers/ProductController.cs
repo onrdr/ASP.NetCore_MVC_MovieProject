@@ -103,9 +103,9 @@ namespace WebUI.Areas.Admin.Controllers
         }
         private void UploadFileIfNotNull(ProductVM productVm, IFormFile? file)
         {
+            string wwwRootPath = _hostEnvironment.WebRootPath;
             if (file != null)
-            {
-                string wwwRootPath = _hostEnvironment.WebRootPath;
+            {               
                 string fileName = Guid.NewGuid().ToString();
                 var uploads = Path.Combine(wwwRootPath, @"images\products");
                 var extension = Path.GetExtension(file.FileName);
@@ -116,7 +116,7 @@ namespace WebUI.Areas.Admin.Controllers
                 {
                     file.CopyTo(fileStream);
                 }
-                productVm.Product.ImageUrl = @"images\products\" + fileName + extension;
+                productVm.Product.ImageUrl = @"\images\products\" + fileName + extension;
             }
         }
         private void DeleteFileIfNotNull(ProductVM productVm, string wwwRootPath)

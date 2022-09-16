@@ -9,12 +9,12 @@ function loadDataTable() {
         "ajax": {
             "url": "/Admin/Product/GetAll"
         },
-        "columns": [
-            { "data": "title", "width": "15%", "height": "60%" },
-            { "data": "isbn", "width": "15%" },
-            { "data": "price", "width": "15%" },
+        "columns": [ 
+            { "data": "title", "width": "15%", }, 
+            { "data": "isbn", "width": "10%" },
+            { "data": "price", "width": "8%" },
             { "data": "author", "width": "15%" },
-            { "data": "category.name", "width": "15%" },
+            { "data": "category.name", "width": "8%" },  
             {
                 "data": "id",
                 "render": function (data) {
@@ -27,7 +27,7 @@ function loadDataTable() {
                         </div> 
                           `
                 },
-                "width": "20%"
+                "width": "10%"
             }
         ]
     });
