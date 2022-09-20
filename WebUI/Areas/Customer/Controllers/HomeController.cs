@@ -31,12 +31,6 @@ namespace WebUI.Areas.Customer.Controllers
                 Product = _unitOfWork.ProductRepository.GetFirstOrDefault(p => p.Id == id, includeProperties: "Category")
             };
             return View(cart);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        } 
     }
 }

@@ -3,6 +3,8 @@ using DataAccess.Data;
 using DataAccess.Repository.IRepository;
 using DataAccess.Repository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +13,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<SaleDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("SaleDbConnection")
     ));
-builder.Services.AddDefaultIdentity<IdentityUser>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<SaleDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 var app = builder.Build();
 
