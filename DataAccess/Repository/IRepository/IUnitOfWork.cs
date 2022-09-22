@@ -1,4 +1,4 @@
-﻿ 
+﻿
 namespace DataAccess.Repository.IRepository
 {
     public interface IUnitOfWork
@@ -6,6 +6,8 @@ namespace DataAccess.Repository.IRepository
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
         ICompanyRepository CompanyRepository { get; }
+        public IShoppingCartRepository ShoppingCartRepository { get; }
+        public IApplicationUserRepository ApplicationUserRepository { get; }
 
         void Save();
     }
